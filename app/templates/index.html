@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .welcome {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .post-box {
+        background-color: #eee7e7;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(16, 204, 116, 0.1);
+    }
+
+    .post-author {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .post-body {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .new-post-link {
+        display: block;
+        text-align: right;
+        margin-bottom: 20px;
+    }
+
+    .new-post-link a {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 12px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .new-post-link a:hover {
+        background-color: #45a049;
+    }
+
+    .post-author{
+        padding-bottom: 10px;
+    }
+
+    .post-author small{
+        float: right; 
+        font-weight: normal; 
+        color: #0f0fa5;
+    }
+
+    .post-body{
+        color: #333;
+    }
+</style>
+
+<div class="container">
+    <div class="welcome">
+        <h1>Bem-vindo{% if user %}, {{ user.username }}{% endif %}!</h1>
+    </div>
+
+    {% if user %}
+        <div class="new-post-link">
+            <a href="{{ url_for('post') }}">Escrever post</a>
+        </div>
+    {% endif %}
+
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post-box">
+                <div class="post-author">
+                    {{ post.author.username }}
+                    <small>
+                        {{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}
+                    </small>
+                </div>
+                <div class="post-body">{{ post.body }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum post encontrado.</p>
+    {% endif %}
+</div>
+{% endblock %}
